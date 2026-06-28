@@ -1,43 +1,42 @@
 class Solution {
-    bool isPossible(vector<int>& nums, int mid, int k){
-        int studentCount=1;
-        int pageSum=0;
-
-        for(int i=0;i<nums.size();i++){
-            if(pageSum+nums[i]<=mid){
-                pageSum=pageSum+nums[i];
+    bool solutionPossible(vector<int>& nums, int mid, int k){
+        int ans=0;
+        int count=1;
+        for(int i=0;i<=nums.size()-1;i++){
+            if((nums[i]+ans)<=mid){
+                ans=ans+nums[i];
             }
             else{
-                studentCount++;
-                if(studentCount>k || nums[i]>mid){
+                count++;
+                if(nums[i]>mid || count>k){
                     return false;
                 }
-                pageSum=nums[i];
+                ans=nums[i];
             }
         }
         return true;
-}
+    }
 public:
     int splitArray(vector<int>& nums, int k) {
         int start=0;
-        int sum=0;
-        for(int i=0; i<nums.size();i++){
-            sum=sum+nums[i];
+        int output=-1;
+        int ans=0;
+        for(int i=0;i<nums.size();i++){
+            ans=ans+nums[i];
         }
-        int end=sum;
+        int end=ans;
         int mid=start+(end-start)/2;
-        int ans=-1;
-
+        
         while(start<=end){
-            if(isPossible(nums,mid,k)){
-                ans=mid;
-                end=mid-1;
-            }
-            else{
-                start=mid+1;
-            }
-            mid=start+(end-start)/2;
-        } 
-        return ans;
+        if(solutionPossible(nums, mid,k)){
+            output=mid;
+            end=mid-1;
+        }
+        else{
+            start=mid+1;
+        }
+        mid=start+(end-start)/2;
+        }
+    return output;    
     }
 };
